@@ -172,3 +172,18 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# env files
+.env
+# VS Code settings
+.vscode/
+# VS Code extensions 
+.vscode-test/
+# VS Code workspace settings
+.vscode-workspace/
+# VS Code Jupyter Notebook settings
+.vscode-jupyter/
+# VS Code Jupyter Notebook checkpoints
+.ipynb_checkpoints
+# VS Code Jupyter Notebook settings
+.vscode-jupyter/
