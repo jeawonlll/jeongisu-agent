@@ -194,4 +194,5 @@ cython_debug/
 
 # w log
 20250709_*.ipynb
+20250730_*.ipynb
 plot.py
