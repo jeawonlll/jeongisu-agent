@@ -1,0 +1,24 @@
+[project]
+name = "jeongisu"
+version = "0.1.0"
+description = "AI-powered storytelling agent inspired by traditional Korean storytellers."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi>=0.110.0",
+  "uvicorn[standard]>=0.27.0",
+  "langchain>=0.2.0",
+  "langchain-google-genai>=1.0.4",
+  "python-dotenv>=1.0.1",
+]
+
+[dependency-groups]
+dev = [
+  "ruff>=0.4.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+lint.select = ["E", "F", "I"]
+lint.ignore = ["E501"]
