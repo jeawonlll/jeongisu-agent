@@ -1,5 +1,5 @@
 from langchain.agents import create_agent
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 from .config import get_env
 
@@ -11,9 +11,9 @@ def build_agent():
         "Keep the tone evocative, with clear imagery and a satisfying arc. "
         "Use tools only if the user explicitly asks for factual lookup."
     )
-    model = ChatOpenAI(
-        api_key=get_env("OPENAI_API_KEY"),
-        model=get_env("OPENAI_MODEL", "gpt-4o-mini"),
+    model = ChatGoogleGenerativeAI(
+        google_api_key=get_env("GOOGLE_API_KEY"),
+        model=get_env("GOOGLE_MODEL", "gemini-1.5-flash"),
         temperature=0.8,
         streaming=True,
     )
