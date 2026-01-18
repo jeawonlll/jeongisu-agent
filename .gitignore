@@ -197,3 +197,6 @@ cython_debug/
 20250730_*.ipynb
 plot.py
 *_for_wife_*.ipynb
+
+# Frontend
+frontend/node_modules/
