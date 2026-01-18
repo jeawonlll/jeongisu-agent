@@ -9,7 +9,7 @@
 - **AI Story Generation**: Creates original fantasy stories based on prompts.
 - **Streaming Output**: Delivers token-by-token storytelling to the UI.
 - **Web Demo (A2UI-inspired)**: A Google-style generative UI demo built in React.
-- **LangChain Orchestration**: Simple LCEL chain with model streaming.
+- **LangChain Orchestration**: `create_agent` with streaming events.
 
 ---
 
@@ -36,7 +36,11 @@ Create a `.env` file:
 
 ```
 GOOGLE_API_KEY=your-api-key-here
-GOOGLE_MODEL=gemini-1.5-flash
+GOOGLE_MODEL=gemini-3-flash-preview
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
+LANGCHAIN_API_KEY=your-langsmith-api-key
+LANGCHAIN_PROJECT=jeongisu-local
 ```
 
 Run the API:
@@ -54,6 +58,8 @@ npm run dev
 ```
 
 The UI expects the API at `http://localhost:8000`. If you change ports, update `frontend/src/main.jsx`.
+
+LangSmith tracing is optional. If you do not want tracing, omit the `LANGCHAIN_*` entries.
 
 ### 3) Linting
 

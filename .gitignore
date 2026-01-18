@@ -175,6 +175,8 @@ cython_debug/
 
 # env files
 .env
+.env.*
+!.env.example
 # VS Code settings
 .vscode/
 # VS Code extensions 
@@ -200,3 +202,14 @@ plot.py
 
 # Frontend
 frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
