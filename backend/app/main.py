@@ -38,6 +38,19 @@ def health() -> dict[str, str]:
 
 @app.post("/api/stream")
 async def stream_story(request: StoryRequest) -> StreamingResponse:
+    def normalize_content(content: object) -> str:
+        if isinstance(content, str):
+            return content
+        if isinstance(content, list):
+            parts: list[str] = []
+            for item in content:
+                if isinstance(item, str):
+                    parts.append(item)
+                elif isinstance(item, dict) and isinstance(item.get("text"), str):
+                    parts.append(item["text"])
+            return "".join(parts)
+        return ""
+
     async def event_stream() -> AsyncGenerator[str, None]:
         async for event in agent.astream_events(
             {"messages": [{"role": "user", "content": request.prompt}]},
@@ -46,7 +59,7 @@ async def stream_story(request: StoryRequest) -> StreamingResponse:
             if event.get("event") != "on_chat_model_stream":
                 continue
             chunk = event.get("data", {}).get("chunk")
-            content = getattr(chunk, "content", "")
+            content = normalize_content(getattr(chunk, "content", ""))
             if not content:
                 continue
             payload = {"type": "token", "content": content}
