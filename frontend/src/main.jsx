@@ -101,80 +101,110 @@ function App() {
 
   return (
     <div className="page">
-      <div className="glow glow--one" />
-      <div className="glow glow--two" />
-      <header className="nav">
-        <div className="brand">
-          <span className="brand__dot" />
-          <span className="brand__name">Jeongisu</span>
-        </div>
-        <span className="brand__tag">A2UI Streaming Storyteller</span>
+      <header className="global-nav">
+        <a className="global-nav__brand" href="/" aria-label="Jeongisu home">
+          Jeongisu
+        </a>
+        <nav className="global-nav__links" aria-label="Primary">
+          <a href="#create">Create</a>
+          <a href="#stream">Stream</a>
+          <a href="#prompts">Prompts</a>
+        </nav>
       </header>
 
-      <main className="content">
-        <section className="panel panel--input">
-          <div className="panel__header">
-            <h1>Summon a new tale</h1>
+      <div className="sub-nav">
+        <span className="sub-nav__title">Storyteller</span>
+        <div className="sub-nav__actions">
+          <a href="#stream">View stream</a>
+          <button
+            className="button button--primary button--small"
+            type="button"
+            onClick={streamStory}
+            disabled={!canGenerate || isStreaming}
+          >
+            {isStreaming ? "Streaming" : "Generate"}
+          </button>
+        </div>
+      </div>
+
+      <main>
+        <section className="hero-tile" id="create">
+          <div className="hero-tile__copy">
+            <p className="eyebrow">Jeongisu</p>
+            <h1>Stories, live as they are told.</h1>
             <p>
-              Shape your myth with a single line. The storyteller responds in
-              a living stream.
+              A quiet canvas for shaping cinematic fantasy prompts and watching
+              each line arrive in motion.
             </p>
           </div>
 
-          <div className="chips">
+          <div className="composer" aria-label="Story prompt composer">
+            <label className="field">
+              <span className="field__label">Prompt</span>
+              <textarea
+                className="field__input"
+                rows={5}
+                value={prompt}
+                onChange={(event) => setPrompt(event.target.value)}
+                placeholder="A sword forged from sunrise seeks its lost bearer..."
+              />
+            </label>
+
+            <div className="actions">
+              <button
+                className="button button--primary"
+                type="button"
+                onClick={streamStory}
+                disabled={!canGenerate || isStreaming}
+              >
+                {isStreaming ? "Streaming" : "Generate"}
+              </button>
+              <button
+                className="button button--secondary"
+                type="button"
+                onClick={stopStream}
+                disabled={!isStreaming}
+              >
+                Stop
+              </button>
+            </div>
+
+            {error ? <div className="error">{error}</div> : null}
+          </div>
+        </section>
+
+        <section className="prompt-tile" id="prompts">
+          <div className="tile-heading">
+            <h2>Prompt starts</h2>
+            <p>Choose a line, then refine it in the composer.</p>
+          </div>
+          <div className="prompt-grid">
             {SUGGESTIONS.map((text) => (
               <button
-                className="chip"
+                className="prompt-card"
                 type="button"
                 key={text}
                 onClick={() => handleSuggestion(text)}
               >
-                {text}
+                <span>{text}</span>
+                <span aria-hidden="true">+</span>
               </button>
             ))}
           </div>
-
-          <label className="field">
-            <span className="field__label">Prompt</span>
-            <textarea
-              className="field__input"
-              rows={5}
-              value={prompt}
-              onChange={(event) => setPrompt(event.target.value)}
-              placeholder="A sword forged from sunrise seeks its lost bearer..."
-            />
-          </label>
-
-          <div className="actions">
-            <button
-              className="btn btn--primary"
-              type="button"
-              onClick={streamStory}
-              disabled={!canGenerate || isStreaming}
-            >
-              {isStreaming ? "Streaming..." : "Generate"}
-            </button>
-            <button
-              className="btn btn--ghost"
-              type="button"
-              onClick={stopStream}
-              disabled={!isStreaming}
-            >
-              Stop
-            </button>
-          </div>
-
-          {error ? <div className="error">{error}</div> : null}
         </section>
 
-        <section className="panel panel--output">
-          <div className="panel__header panel__header--compact">
-            <h2>Story Stream</h2>
-            <span className={isStreaming ? "pulse" : "pulse pulse--idle"}>
+        <section className="stream-tile" id="stream">
+          <div className="stream-tile__header">
+            <div>
+              <p className="eyebrow eyebrow--dark">Live output</p>
+              <h2>Story Stream</h2>
+            </div>
+            <span className={isStreaming ? "status" : "status status--idle"}>
               {isStreaming ? "Live" : "Idle"}
             </span>
           </div>
-          <div className="story">
+
+          <article className="story">
             {story ? (
               <p>{story}</p>
             ) : (
@@ -182,7 +212,7 @@ function App() {
                 The story will appear here as the tokens arrive.
               </p>
             )}
-          </div>
+          </article>
         </section>
       </main>
     </div>
